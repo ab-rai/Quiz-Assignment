@@ -18,7 +18,7 @@ export class QuizComponent implements OnInit {
   currentQuestion: QuestionObj={questionNo: 0, operand1: 0, operand2: 0, operator: "", correctResult: 0, submittedResult: 0 ,color:""};
   questionNumber=new Array<number>();
   currentQuestionNumber:number=1;
-  constructor() {
+  constructor(private questionGeneratorService:QuestionGeneratorService) {
     console.log(Math.random())
    }
 
@@ -35,30 +35,33 @@ export class QuizComponent implements OnInit {
     this.generateQuestion(this.operandRange,this.operators);
   }
   nextQuestion(){
-    let obj={
-    questionNo: this.currentQuestionNumber-1,
-    operand1: this.currentQuestion.operand1,
-    operand2: this.currentQuestion.operand2,
-    operator: this.currentQuestion.operator,
-    correctResult: this.currentQuestion.correctResult,
-    submittedResult: this.currentQuestion.submittedResult,
-    color: this.currentQuestion.correctResult != this.currentQuestion.submittedResult ? "red" :"green"
-    }
+    // let obj={
+    // questionNo: this.currentQuestionNumber-1,
+    // operand1: this.currentQuestion.operand1,
+    // operand2: this.currentQuestion.operand2,
+    // operator: this.currentQuestion.operator,
+    // correctResult: this.currentQuestion.correctResult,
+    // submittedResult: this.currentQuestion.submittedResult,
+    // color: this.currentQuestion.correctResult != this.currentQuestion.submittedResult ? "red" :"#00fff0"
+    // }
+    let obj=this.questionGeneratorService.generateNewObj(this.currentQuestion,this.currentQuestionNumber);
     this.questionsList.push(obj);
     this.questionNumber.push(this.currentQuestionNumber);
     this.questionGenerator();
     this.currentQuestionNumber+=1;
   }
   generateResult(){
-    let obj={
-    questionNo: this.currentQuestionNumber-1,
-    operand1: this.currentQuestion.operand1,
-    operand2: this.currentQuestion.operand2,
-    operator: this.currentQuestion.operator,
-    correctResult: this.currentQuestion.correctResult,
-    submittedResult: this.currentQuestion.submittedResult,
-    color: this.currentQuestion.correctResult != this.currentQuestion.submittedResult ? "red" :"green"
-    }
+    // let obj={
+    // questionNo: this.currentQuestionNumber-1,
+    // operand1: this.currentQuestion.operand1,
+    // operand2: this.currentQuestion.operand2,
+    // operator: this.currentQuestion.operator,
+    // correctResult: this.currentQuestion.correctResult,
+    // submittedResult: this.currentQuestion.submittedResult,
+    // color: this.currentQuestion.correctResult != this.currentQuestion.submittedResult ? "red" :"#00fff0"
+    // }
+    let obj=this.questionGeneratorService.generateNewObj(this.currentQuestion,this.currentQuestionNumber);
+    
     this.questionsList.push(obj);
     this.showResult=true;
     for(let question of this.questionsList){
