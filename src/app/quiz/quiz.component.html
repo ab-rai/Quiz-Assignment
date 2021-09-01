@@ -1,0 +1,33 @@
+<div class="quiz">
+    <div class="quiz-input" *ngIf="!runQuiz">
+        <label for="amountOfQuestion"> amountOfQuestion:</label>
+        <input type="number"  name="amountOfQuestion" [(ngModel)]="amountOfQuestion">
+        <br><br>
+        <label for="operandRange"> operandRange:</label>
+        <input type="number"  name="operandRange" [(ngModel)]="operandRange">
+        <br><br>
+        <button (click)="startQuiz()">Start Quiz</button>
+    </div>
+    <div *ngIf="runQuiz" [hidden]="showResult">
+        <h1>Running quiz</h1>
+        <div *ngFor="let currentQuestionNumber of questionNumber" [hidden]="currentQuestionNumber!=questionNumber.length">
+            <h1>{{currentQuestionNumber}}</h1>
+            <p>{{currentQuestion.operand1}} {{currentQuestion.operator}} {{currentQuestion.operand2}} =
+                 <input type="number"  name="submittedResult" [(ngModel)]="currentQuestion.submittedResult" value="0"></p>
+            <button *ngIf="currentQuestionNumber==amountOfQuestion ; else next_question" (click)="generateResult()">Finish Quiz</button>
+            <ng-template #next_question> <button (click)="nextQuestion()">Next Question</button> </ng-template>
+            
+        </div>
+    </div>
+    <div *ngIf="showResult">
+        <h2> Result </h2>
+        <div *ngFor="let question of questionsList">
+            
+            <h3 [style.color]='question.color'>{{question.questionNo}} :- {{question.operand1}} {{question.operator}} {{question.operand2}} = {{question.correctResult}}</h3>
+            <br>
+        </div>
+        <div>
+            <h2>Score={{score}}</h2>
+        </div>
+    </div>
+</div>
